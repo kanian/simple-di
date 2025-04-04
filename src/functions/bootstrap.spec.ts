@@ -2,10 +2,8 @@ import { expect, test, describe, beforeEach } from 'bun:test';
 import { Module } from '../types/Module';
 import { bootstrap } from './bootstrap';
 import { inject } from './inject';
-import { registerValue } from './registerValue';
 import { initializeContainer } from './initializeContainer';
 import { Service } from '../decorators/Service';
-import { Inject } from '../decorators/Inject';
 
 describe('Bootstrap Functionality', () => {
   beforeEach(() => {
@@ -28,12 +26,18 @@ describe('Bootstrap Functionality', () => {
     }
 
     const moduleA = new Module({
-      providers: [ServiceA],
+      providers: [{
+        provide: 'ServiceA',
+        useClass: ServiceA,
+      }],
     });
 
     const rootModule = new Module({
       imports: [moduleA],
-      providers: [ServiceB],
+      providers: [{
+        provide: 'ServiceB',
+        useClass: ServiceB,
+      }],
     });
 
     bootstrap(rootModule);
@@ -62,6 +66,46 @@ describe('Bootstrap Functionality', () => {
 
     const configValue = inject(CONFIG_TOKEN);
     expect(configValue).toBe(config);
+  });
+
+  test('should register factory providers', () => {
+    class ClassA {
+      getValue() {
+        return 'ClassA';
+      }
+    }
+    const factory = () => {
+      return new ClassA();
+    };
+    const rootModule = new Module({
+      providers: [
+        {
+          provide: 'ClassA',
+          useFactory: factory,
+        },
+      ],
+    });
+    bootstrap(rootModule);
+    const instanceA = inject<ClassA>('ClassA');
+    expect(instanceA.getValue()).toBe('ClassA');
+  })
+  
+  test('should register raw class providers', () => {
+
+    class TokenService {
+      getValue() {
+        return 'TokenService';
+      }
+    }
+
+    const rootModule = new Module({
+      providers: [TokenService],
+    });
+
+    bootstrap(rootModule);
+
+    const instance = inject<TokenService>(TokenService);
+    expect(instance.getValue()).toBe('TokenService');
   });
 
   test('should register class providers with tokens', () => {
@@ -96,9 +140,12 @@ describe('Bootstrap Functionality', () => {
         return 'C';
       }
     }
-
+    console.log('ServiceC name ', ServiceC.name);
     const moduleB = new Module({
-      providers: [ServiceC],
+      providers: [{
+        provide: 'ServiceC',
+        useClass: ServiceC,
+      }],
     });
 
     const moduleA = new Module({

@@ -1,12 +1,12 @@
 {
   "name": "@kanian77/simple-di",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple dependency injection library for TypeScript.",
   "author": {
     "name": "Patrick Assoa Adou",
     "email": "kanian77@gmail.com"
   },
-  "repository": {},
+  "repository": "git@github.com:kanian/simple-di.git",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
