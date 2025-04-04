@@ -94,7 +94,11 @@ export function Service(
       get: () => {
         if (isTransient) {
           // For transient services, always create a new instance
-          return inject(target, true); // New parameter to force new instance
+          // First ensure dependencies are autowired if needed
+          if (!target[dependencies]) {
+            autowireService(target);
+          }
+          return inject(target, true); // Force new instance
         }
         if (!target[singleton]) {
           // Autowire if not manually specified

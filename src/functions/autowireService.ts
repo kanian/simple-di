@@ -1,11 +1,20 @@
 import 'reflect-metadata';
 
-import { Injectable } from "../types/Injectable";
-import { dependencies, PARAM_TOKENS_METADATA } from "../types/symbols";
-import { serviceRegistry } from "./serviceRegistry";
+import { Injectable } from '../types/Injectable';
+import { dependencies, PARAM_TOKENS_METADATA } from '../types/symbols';
+import { serviceRegistry } from './serviceRegistry';
 
-// Helper function to autowire dependencies based on constructor parameters
+/**
+ * Autowires dependencies based on constructor parameters
+ * Works for both transient and singleton services
+ * @param target The service class to autowire
+ */
 export const autowireService = <T>(target: Injectable<T>): void => {
+  // Check if already autowired
+  if (target[dependencies]) {
+    return;
+  }
+
   const paramTypes = Reflect.getMetadata('design:paramtypes', target) || [];
 
   if (!paramTypes || paramTypes.length === 0) {
@@ -27,4 +36,4 @@ export const autowireService = <T>(target: Injectable<T>): void => {
   });
 
   target[dependencies] = autowiredDeps;
-}
+};

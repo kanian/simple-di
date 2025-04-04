@@ -1,4 +1,4 @@
-import { singleton, dependencies } from "../types/symbols";
+import { singleton, dependencies, transient } from "../types/symbols";
 import { autowireService } from "./autowireService";
 import { inject } from "./inject";
 import { serviceRegistry } from "./serviceRegistry";
@@ -10,7 +10,10 @@ export function initializeContainer(): void {
     // Skip value dependencies
     if (service.isValue) return;
 
-    // Ensure all services are initialized
+    // Skip transient services - they're created on-demand
+    if (service[transient]) return;
+
+    // Ensure all singleton services are initialized
     if (!service[singleton]) {
       // Autowire if needed
       if (!service[dependencies]) {
