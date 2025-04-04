@@ -1,0 +1,37 @@
+{
+  "name": "@kanian77/simple-di",
+  "version": "0.0.1",
+  "description": "A simple dependency injection library for TypeScript.",
+  "author": {
+    "name": "Patrick Assoa Adou",
+    "email": "kanian77@gmail.com"
+  },
+  "repository": {},
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build --verbose",
+    "dev": "tsc --build --verbose --watch",
+    "clean": "rm -rf dist && rm tsconfig.tsbuildinfo",
+    "prepare": "bun run clean && bun run build"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2"
+  },
+  "dependencies": {
+    "@types/bun": "^1.2.4",
+    "reflect-metadata": "^0.2.2"
+  }
+}

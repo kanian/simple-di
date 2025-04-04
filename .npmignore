@@ -1,0 +1,8 @@
+# Ignore source files
+src/
+
+# ignore build info
+tsconfig.tsbuildinfo
+
+# Ignore configuration and build files
+bun.lockb
