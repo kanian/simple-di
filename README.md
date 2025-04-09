@@ -75,14 +75,6 @@ Use the `bootstrap` function to initialize the application with a root module:
 bootstrap(myModule);
 ```
 
-## Testing
-
-The project includes a suite of tests to ensure the DI system works as expected. To run the tests, use:
-
-```bash
-npm test
-```
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue.
