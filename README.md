@@ -49,6 +49,23 @@ class ConsumerService {
 }
 ```
 
+### Transient Services
+
+Transient services are created anew each time they are requested. To define a transient service, specify the lifecycle option as 'transient' in the `@Service` decorator:
+
+```typescript
+@Service({ lifecycle: 'transient' })
+class TransientService {
+  public value: number = Math.random();
+}
+
+// Usage
+const instance1: TransientService = inject(TransientService);
+const instance2: TransientService = inject(TransientService);
+
+console.log(instance1.value !== instance2.value); // true, different instances
+```
+
 ### Initializing the Container
 
 Call `initializeContainer()` to resolve all registered services:
