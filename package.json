@@ -1,6 +1,6 @@
 {
   "name": "@kanian77/simple-di",
-  "version": "0.0.2",
+  "version": "0.1.2",
   "description": "A simple dependency injection library for TypeScript.",
   "author": {
     "name": "Patrick Assoa Adou",
@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsc --build --verbose",
     "dev": "tsc --build --verbose --watch",
-    "clean": "rm -rf dist && rm tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist && rm -f tsconfig.tsbuildinfo",
     "prepare": "bun run clean && bun run build"
   },
   "devDependencies": {
