@@ -36,12 +36,21 @@ class MyService {
 
 ### Injecting Dependencies
 
-Use the `@Inject` decorator to inject dependencies into a class:
+Use the `@Inject` decorator to inject dependencies into a class using tokens:
 
 ```typescript
+const MY_SERVICE_TOKEN = Symbol('MyServiceToken');
+
+@Service({ token: MY_SERVICE_TOKEN })
+class MyService {
+  getValue() {
+    return 'Hello, World!';
+  }
+}
+
 @Service()
 class ConsumerService {
-  constructor(@Inject(MyService) private myService: MyService) {}
+  constructor(@Inject(MY_SERVICE_TOKEN) private myService: MyService) {}
 
   getValue() {
     return this.myService.getValue();
